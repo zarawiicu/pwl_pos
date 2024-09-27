@@ -10,8 +10,9 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class UserController extends Controller
 {
     public function index() {
-        $user = UserModel::all();
-        return view('user', ['data' => $user]);
+        $user = UserModel::with('level')->get();
+        // return view('user', ['data' => $user]);
+        dd($user);
     }
 
     public function tambah() {
