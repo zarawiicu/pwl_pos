@@ -10,29 +10,46 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class UserController extends Controller
 {
     public function index() {
-        $user = UserModel::firstOrNew(
-            [
-                'username' => 'manager55',
-                'nama' => 'Manager55',
-                'password' => Hash::make('12345'),
-                'level_id' => 2,
-            ]);
-            $user->username = 'manager56';
+        $user = UserModel::all();
+        return view('user', ['data' => $user]);
+    }
 
-            $user->isDirty();
-            $user->isDirty ('username');
-            $user->isDirty('nama');
-            $user->isDirty(['nama', 'username']);
+    public function tambah() {
+        return view('create');
+    }
 
-            $user->isClean();
-            $user->isClean('username');
-            $user->isClean('nama');
-            $user->isClean(['nama', 'username']);
+    public function tambah_simpan(Request $request) {
+        UserModel::create([
+            'username' => $request->username,
+            'nama' => $request->nama,
+            'password' => Hash::make('$request->password'),
+            'level_id' => $request->level_id
+        ]);
+        return redirect('/user');
+    }
 
-            $user->save();
-            
-            $user->isDirty();
-            $user->isClean();
-            DD($user->isDirty());
+    public function ubah($id) {
+        $user = UserModel::find($id);
+        return view('ubah', ['data' => $user]);
+    }
+
+    public function ubah_simpan($id, Request $request) {
+        $user = UserModel::find($id);
+
+        $user->username = $request-> username;
+        $user->nama = $request-> nama;
+        $user->password = Hash::make('$request->password');
+        $user->level_id = $request-> level_id;
+
+        $user->save();
+
+        return redirect('/user');
+    }
+    
+    public function hapus($id) {
+        $user = UserModel::find($id);
+        $user-> delete();
+
+        return redirect('/user');
     }
 }
