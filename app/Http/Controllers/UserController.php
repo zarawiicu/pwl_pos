@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Models\LevelModel;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,8 @@ class UserController extends Controller
     {
         //fungsi eloquent menampilkan data menggunakan pagination
         $useri = UserModel::all(); // Mengambil semua isi tabel
-        return view('user.index', compact('useri'))->with('i');
+        $levels = LevelModel::all();
+        return view('user.index', compact('useri','levels'))->with('i');
     }
 
     /**
@@ -24,7 +26,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('user.create');
+        $levels = LevelModel::all();
+        return view('user.create', compact('levels'));
     }
 
     /**
@@ -38,7 +41,7 @@ class UserController extends Controller
             'user_id' => 'max 20',
             'username' => 'required',
             'nama' => 'required',
-           
+            'level_id' => 'required|exists:levels,id',
         ]);
 
         //fungsi eloquent untuk menambah data
@@ -53,7 +56,8 @@ class UserController extends Controller
     public function show(string $id, UserModel $useri)
     {
         $useri = UserModel::findOrFail($id);
-        return view('user.show', compact('useri'));
+        $levels = LevelModel::all();
+        return view('user.show', compact('useri','levels'));
     }
     /**
     * Show the form for editing the specified resource.
@@ -62,7 +66,8 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $useri = UserModel::find($id);
-        return view('user.edit', compact('useri'));
+        $levels = LevelModel::all();
+        return view('user.edit', compact('useri','levels'));
     }
 
     /**
@@ -74,7 +79,7 @@ class UserController extends Controller
             'username' => 'required',
             'nama' => 'required',
             'password' => 'required',
-           
+            'level_id' => 'required'
             
         ]);
 
