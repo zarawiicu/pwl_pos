@@ -2,36 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\UserModel;
+use App\Http\Requests\StoreUserRequest;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\UserModel;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends Controller
 {
     public function index() {
         $user = UserModel::with('level')->get();
-        // return view('user', ['data' => $user]);
-        dd($user);
+         return view('user.index', ['data' => $user]);
     }
 
     public function tambah() {
-        return view('create');
+        return view('user.create');
     }
 
-    public function tambah_simpan(Request $request) {
-        UserModel::create([
-            'username' => $request->username,
-            'nama' => $request->nama,
-            'password' => Hash::make('$request->password'),
-            'level_id' => $request->level_id
-        ]);
+    public function tambah_simpan(StoreUserRequest $request):RedirectResponse {
+        $validated = $request->validate();
+        $validated = $request->safe()->only(['username', 'nama', 'password', 'level_id']);
+        $validated = $request->safe()->except(['username', 'nama', 'password', 'level_id']);
+        
         return redirect('/user');
     }
 
     public function ubah($id) {
         $user = UserModel::find($id);
-        return view('ubah', ['data' => $user]);
+        return view('user.edit', ['data' => $user]);
     }
 
     public function ubah_simpan($id, Request $request) {

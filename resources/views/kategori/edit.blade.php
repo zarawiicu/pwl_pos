@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('subtitle', 'Kategori')
-@section('content_header_title', 'Kategori')
-@section('content_header_subtitle', 'Edit')
-
 @section('content')
     <div class="container">
         <div class="card card-primary">

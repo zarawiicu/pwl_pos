@@ -18,19 +18,32 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+})->name('index');
+
+// Form
+Route::get('/form', function () {
+    return view('general-form');
+});
+Route::get('/form/user', function () {
+    return view('user.user-form');
+});
+Route::get('/form/level', function () {
+    return view('level.level-form');
 });
 
-
-route::get('/level', [LevelController::class, 'index']);
-route::get('/kategori', [KategoriController::class, 'index']);
+route::get('/level/index', [LevelController::class, 'index'])->name('level.index');
+route::get('/level/create', [LevelController::class, 'create'])->name('level.create');
+route::post('/level', [LevelController::class, 'store'])->name('level.store');
+//Kategori
+Route::get('/kategori/index', [KategoriController::class, 'index'])->name('kategori.index');
+Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
+Route::post('/kategori', [KategoriController::class, 'store'])->name('kategori.store');
 
 
 // user
-route::get('/user', [UserController::class, 'index']);
-route::get('/user/tambah', [UserController::class, 'tambah']);
-route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan'])->name('user.tambah_simpan');
-
-route::get('/user/ubah/{id}', [UserController::class, 'ubah']);
-route::post('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan']);
-    
-route::get('/user/hapus/{id}', [UserController::class, 'hapus']);
+Route::get('/user/index', [UserController::class, 'index'])->name('user.index');
+Route::get('/user/tambah', [UserController::class, 'tambah'])->name('tambah');
+Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan'])->name('tambah_simpan');
+Route::get('/user/ubah/{id}', [UserController::class, 'ubah'])->name('ubah');
+Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan'])->name('ubah_simpan');
+Route::get('/user/hapus/{id}', [UserController::class, 'hapus'])->name('hapus');

@@ -1,45 +1,92 @@
+@extends('layouts.app')
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create User</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</head>
-<body>
+@section('content')
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>User Form</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">User Form</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Create User</div>
-                    <div class="card-body">
-                        <form action="/user/tambah_simpan" method="post">
-                            @csrf
-                            <div class="form-group">
-                                <label for="level_id">Level ID:</label>
-                                <input type="text" class="form-control" id="level_id" name="level_id">
-                            </div>
-                            <div class="form-group">
-                                <label for="username">Username:</label>
-                                <input type="text" class="form-control" id="username" name="username">
-                            </div>
-                            <div class="form-group">
-                                <label for="nama">Nama:</slabel>
-                                <input type="text" class="form-control" id="nama" name="nama">
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password:</label>
-                                <input type="password" class="form-control" id="password" name="password">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+        {{-- @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif --}}
+        <div class="card card-primary">
+            <div class="card-header">
+                <h5 class="card-title">Tambah User Baru</h5>
+            </div>
+
+            <form method="post" action="{{ route('tambah_simpan') }}">
+                @csrf
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" class="form-control" id="username" name="username">
+                        </div>
+                        @error('username')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="nama">Nama:</slabel>
+                            <input type="text" class="form-control" id="nama" name="nama">
+                        </div>
+                        @error('nama')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password">
+                        </div>
+                        @error('password')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group">
+                    <label for="level_id">Level ID:</label>
+                    <input type="text" class="form-control" id="level_id" name="level_id">
+                </div>
+                        @error('level_id')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+
                     </div>
                 </div>
-            </div>
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
-</body>
-</html>
+    
+    <!-- /.content -->
+    @endsection
 
