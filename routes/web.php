@@ -41,9 +41,10 @@ Route::post('/kategori', [KategoriController::class, 'store'])->name('kategori.s
 
 
 // user
-Route::get('/user/index', [UserController::class, 'index'])->name('user.index');
-Route::get('/user/tambah', [UserController::class, 'tambah'])->name('tambah');
-Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan'])->name('tambah_simpan');
-Route::get('/user/ubah/{id}', [UserController::class, 'ubah'])->name('ubah');
-Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan'])->name('ubah_simpan');
-Route::get('/user/hapus/{id}', [UserController::class, 'hapus'])->name('hapus');
+Route::resource('user', UserController::class);
+// Route::get('/user/index', [UserController::class, 'index'])->name('user.index');
+// Route::get('/user/tambah', [UserController::class, 'tambah'])->name('tambah');
+// Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan'])->name('tambah_simpan');
+// Route::get('/user/ubah/{id}', [UserController::class, 'ubah'])->name('ubah');
+// Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan'])->name('ubah_simpan');
+// Route::get('/user/hapus/{id}', [UserController::class, 'hapus'])->name('hapus');
